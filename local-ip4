@@ -1,0 +1,13 @@
+#!/bin/bash
+
+device=$(source net-device)
+
+line=$(LANG="C" /sbin/ifconfig $device |grep inet|grep netmask)
+
+n=0
+for i in $line ; do
+    if [ $n -eq 1 ] ; then ip=$i ; break ; fi
+    if [[ $i = inet ]] ; then n=1 ; fi
+done
+
+echo $ip
